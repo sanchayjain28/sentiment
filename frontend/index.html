@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple API Caller</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+    }
+    #response {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>API Input Form</h2>
+
+  <input type="text" id="userInput" placeholder="Enter something..." required/>
+  <button onclick="submitInput()">Submit</button>
+
+  <div id="response"></div>
+
+  <script>
+    async function submitInput() {
+      const input = document.getElementById("userInput").value;
+      const responseDiv = document.getElementById("response");
+
+      try {
+        const res = await fetch("http://localhost:8090/post-review", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ review : input })
+        });
+
+        const data = await res.json();
+        responseDiv.innerHTML = `<strong>Response:</strong> ${JSON.stringify(data.result)}`;
+      } catch (error) {
+        responseDiv.innerHTML = `<span style="color: red;">Error:</span> ${error}`;
+      }
+    }
+  </script>
+
+</body>
+</html>
