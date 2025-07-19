@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   fastapi-app:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8090:8090"
     container_name: fastapi-review-analyzer
